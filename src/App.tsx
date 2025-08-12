@@ -11,6 +11,13 @@ import NotFound from "./pages/NotFound";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
+import SellerProfilePage from "./pages/seller/SellerProfilePage";
+import SellerProductPage from "./pages/seller/SellerProductPage";
+import SellerDashboardPage from "./pages/seller/SellerDashboardPage";
+import SellerStorefront from "./pages/seller/SellerStorefront";
+import SellerMapLocator from "./pages/seller/SellerMapLocator";
+import CustomerAccountPage from "./pages/account/CustomerAccountPage";
+import Cart from "./pages/cart/Cart";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +34,16 @@ const App = () => (
               <Route path="/auth/login" element={<LoginPage />} />
               <Route path="/auth/register" element={<RegisterPage />} />
               <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
+
+              <Route path="/seller/:sellerId/profile" element={<SellerProfilePage />} />
+              <Route path="/seller/:sellerId/products" element={<SellerProductPage />} />
+              <Route path="/seller/:sellerId/storefront" element={<SellerStorefront />} />
+              <Route path="/seller/map" element={<SellerMapLocator />} />
+
+              <Route path="/dashboard/seller" element={<SellerDashboardPage />} />
+              <Route path="/account" element={<CustomerAccountPage />} />
+              <Route path="/cart" element={<Cart />} />
+
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
