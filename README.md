@@ -1,73 +1,89 @@
-# Welcome to your Lovable project
+# Adobe-Style Multi‑Vendor Marketplace (React + Vite + Tailwind)
 
-## Project info
+This project implements an Adobe Store–inspired multi‑vendor storefront with a customer account dashboard, seller dashboard (no site header/footer), seller storefront, and a seller map locator. It connects to a Magento backend via GraphQL.
 
-**URL**: https://lovable.dev/projects/f435677c-2eea-429c-a3c9-9ad6b7bee8c4
+## Frontend Stack
+- React 18 + Vite + TypeScript
+- Tailwind CSS + shadcn/ui
+- Apollo Client (@apollo/client)
+- React Router
+- TanStack Query (ancillary)
 
-## How can I edit this code?
+## Backend Requirements (Magento + GraphQL)
+- Magento instance accessible at: https://app.canadamarketplace.test
+- GraphQL endpoint: https://app.canadamarketplace.test/graphql
+- CORS must allow this frontend origin and include Authorization headers
+- Customer token authentication (customerToken) stored in localStorage
+- 3rd‑party Multi‑Vendor module must expose these GraphQL fields/mutations or equivalents:
+  - sellerByCustomer, updateSellerProfile, requestSellerPayout
+  - products filterable by seller_id
+  - createVendorProduct or similar mutation for seller product creation
 
-There are several ways of editing your application.
+## Apollo Client Configuration
+File: src/lib/apolloClient.ts
+- Uses the Magento GraphQL endpoint
+- Adds Authorization: Bearer <customerToken> when present
+- Centralized error logging for GraphQL and network errors
 
-**Use Lovable**
+## Implemented GraphQL Documents
+Files under src/graphql/
+- customer.ts
+  - GET_CUSTOMER, GET_CUSTOMER_ORDERS, UPDATE_CUSTOMER
+- seller.ts
+  - GET_SELLER_BY_CUSTOMER, UPDATE_SELLER_PROFILE, REQUEST_PAYOUT
+- catalog.ts
+  - GET_VENDOR_PRODUCTS, CREATE_VENDOR_PRODUCT
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/f435677c-2eea-429c-a3c9-9ad6b7bee8c4) and start prompting.
+These documents are scaffolds and may need to be aligned to your marketplace module's exact schema names.
 
-Changes made via Lovable will be committed automatically to this repo.
+## Pages and Routes
+- / — Home with Adobe‑style header, hero slider, categories, featured products
+- /account — Customer Account Dashboard with vertical menu tabs and Become a Seller CTA or Seller Panel shortcut
+- /dashboard/seller — Seller Dashboard with left sidebar navigation, no site header/footer
+- /seller/:sellerId/storefront — Seller Storefront page
+- /seller/map — Seller Map Locator
+- /seller/:sellerId/products — Seller Product Listing
+- /wishlist — Wishlist page
+- /compare — Compare items page
 
-**Use your preferred IDE**
+## Seller Dashboard (No Global Header/Footer)
+- Left vertical menu matching Magento admin look & groups:
+  - Dashboard, Seller (My Profile, My Shop), Catalog (Manage Products, Configurable Attributes, Manage Categories, Manage Discounts), Finance (Transactions, Payouts, Payment Methods)
+- Quick links open the corresponding Magento screens in a new tab
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Customer Account Dashboard
+- Left vertical menu tabs:
+  - My Account, My Orders, My Downloadable Products, My Wish List, Address Book, Edit Account, Stored Payment Methods, My Product Reviews, Newsletter Subscription, Privacy Settings
+- Become a Seller CTA if not approved (localStorage isSellerApproved !== "true")
+- If approved, shows buttons for Edit Seller and Seller Panel
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Header UX
+- Right‑top icons: Language switcher (EN/FR), Wishlist, Account dropdown
+- Account dropdown items: My Account, My Wishlist, Compare Items, My Orders, Contact Us + language switcher and Logout when authenticated
 
-Follow these steps:
+## Internationalization
+- Minimal EN/FR switcher stores selection in localStorage (key: lang)
+- Extendable via src/context/LanguageContext.tsx
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## How to Run
+1. npm i
+2. npm run dev
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## How to Connect to Magento
+1. Ensure Magento GraphQL is reachable from the browser (CORS enabled)
+2. Create or obtain a customer token (via Magento REST or GraphQL customerToken mutation)
+3. Store token in browser localStorage under key customerToken
+4. Load the app — authenticated GraphQL requests will include the token automatically
 
-# Step 3: Install the necessary dependencies.
-npm i
+## Mapping Multi‑Vendor Features
+- Seller Profiles and Storefront: use GET_SELLER_BY_CUSTOMER and frontend Seller pages
+- Product Listings: GET_VENDOR_PRODUCTS with search/sort/pagination in SellerProductPage
+- Vendor‑Specific Cart: UI scaffold present in src/pages/cart/Cart.tsx (extend to group per vendor and compute totals)
+- Seller Dashboard: Operations scaffolded; link to Magento flows for create/edit where applicable
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+## Next Steps
+- Align GraphQL document names/fields to your module
+- Implement data fetching in pages to replace mock data
+- Add proper i18n (e.g., i18next) if full translation is required
+- Hook up vendor‑grouped cart calculations and shipping selection
 
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/f435677c-2eea-429c-a3c9-9ad6b7bee8c4) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
