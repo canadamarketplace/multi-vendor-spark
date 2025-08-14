@@ -36,7 +36,7 @@ const CustomerAccountPage = () => {
   }, [tab, setParams]);
 
   const becomeSeller = () => {
-    window.open("https://app.canadamarketplace.test/en/WblMarketPlace/seller/add/", "_blank");
+    window.open("/auth/become-seller", "_self");
   };
 
   return (
@@ -63,7 +63,7 @@ const CustomerAccountPage = () => {
                 <div className="mt-4 p-3 rounded-md border">
                   <div className="font-medium mb-2">Seller Account</div>
                   <p className="text-sm text-muted-foreground">You are approved. Access your seller panel.</p>
-                  <div className="mt-2 flex gap-2"><Button size="sm" onClick={() => window.open("https://app.canadamarketplace.test/en/WblMarketPlace/seller/edit/", "_blank")}>Edit Seller</Button><Button size="sm" variant="outline" onClick={() => window.open("/dashboard/seller", "_self")}>Seller Panel</Button></div>
+                  <div className="mt-2 flex gap-2"><Button size="sm" onClick={() => window.open("/seller/dashboard", "_self")}>Edit Seller</Button><Button size="sm" variant="outline" onClick={() => window.open("/seller/dashboard", "_self")}>Seller Panel</Button></div>
                 </div>
               )}
             </TabsList>

@@ -52,9 +52,9 @@ const SellerDashboardPage = () => {
 
       <SidebarProvider>
         <div className="flex min-h-[calc(100vh-48px)] w-full">
-          <Sidebar className="w-60" collapsible>
+          <Sidebar className="w-60" collapsible="icon">
             <SidebarContent>
-              <SidebarGroup defaultOpen>
+              <SidebarGroup>
                 <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
                 <SidebarGroupContent>
                   <SidebarMenu>
