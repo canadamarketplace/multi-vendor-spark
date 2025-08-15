@@ -128,8 +128,7 @@ const Categories = () => {
                 {categoryProducts.map((product) => (
                   <ProductCard 
                     key={product.id} 
-                    product={product} 
-                    variant={viewMode === "list" ? "list" : "card"}
+                    product={product}
                   />
                 ))}
               </div>

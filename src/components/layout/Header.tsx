@@ -37,10 +37,10 @@ const Header = () => {
         <NavigationMenu>
           <NavigationMenuList>
             {[
-              { label: language === "fr" ? "Produits" : "Products", to: "/seller/1/products" },
+              { label: language === "fr" ? "Catégories" : "Categories", to: "/categories/1" },
               { label: language === "fr" ? "Vendeurs" : "Sellers", to: "/seller/map" },
-              { label: language === "fr" ? "Tarifs" : "Pricing", to: "/#pricing" },
-              { label: language === "fr" ? "Assistance" : "Support", to: "/#support" },
+              { label: language === "fr" ? "Promotions" : "Sale", to: "/sale" },
+              { label: language === "fr" ? "Assistance" : "Support", to: "/contact" },
             ].map((item) => (
               <NavigationMenuItem key={item.label}>
                 <NavLink to={item.to} className="px-3 py-2 text-sm text-foreground/80 hover:text-foreground">

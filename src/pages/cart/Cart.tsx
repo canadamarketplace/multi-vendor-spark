@@ -9,7 +9,7 @@ const Cart = () => {
   // Group mock items by vendor
   const groups = Object.values(
     mockProducts.slice(0, 4).reduce<Record<string, { vendor: string; items: typeof mockProducts }>>((acc, p) => {
-      const key = p.vendor?.name || "Unknown";
+      const key = p.vendor.name || "Unknown";
       acc[key] = acc[key] || { vendor: key, items: [] as any };
       (acc[key].items as any).push(p);
       return acc;

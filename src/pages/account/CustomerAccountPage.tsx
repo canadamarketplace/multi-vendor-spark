@@ -7,7 +7,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import MyOrders from "./MyOrders";
+import MyDownloads from "./MyDownloads";
+import AddressBook from "./AddressBook";
+import EditAccount from "./EditAccount";
+import PaymentMethods from "./PaymentMethods";
+import ProductReviews from "./ProductReviews";
+import NewsletterSubscription from "./NewsletterSubscription";
+import PrivacySettings from "./PrivacySettings";
 
 const TABS = [
   { value: "overview", label: "My Account" },
@@ -23,6 +31,7 @@ const TABS = [
 ];
 
 const CustomerAccountPage = () => {
+  const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
   const initial = params.get("tab") || "overview";
   const [tab, setTab] = useState<string>(initial);
@@ -36,7 +45,7 @@ const CustomerAccountPage = () => {
   }, [tab, setParams]);
 
   const becomeSeller = () => {
-    window.open("/auth/become-seller", "_self");
+    navigate("/auth/become-seller");
   };
 
   return (
@@ -109,142 +118,44 @@ const CustomerAccountPage = () => {
             </TabsContent>
 
             <TabsContent value="orders">
-              <Card>
-                <CardHeader><CardTitle>My Orders</CardTitle></CardHeader>
-                <CardContent>
-                  <div className="text-sm text-muted-foreground">View your order history with vendor attribution.</div>
-                  <Button className="mt-2" size="sm" asChild>
-                    <a href="https://app.canadamarketplace.test/en/sales/order/history/" target="_blank" rel="noreferrer">Open Magento Orders</a>
-                  </Button>
-                </CardContent>
-              </Card>
+              <MyOrders />
             </TabsContent>
 
             <TabsContent value="downloads">
-              <Card>
-                <CardHeader><CardTitle>My Downloadable Products</CardTitle></CardHeader>
-                <CardContent>
-                  <Button size="sm" asChild>
-                    <a href="https://app.canadamarketplace.test/en/downloadable/customer/products/" target="_blank" rel="noreferrer">Open in Magento</a>
-                  </Button>
-                </CardContent>
-              </Card>
+              <MyDownloads />
             </TabsContent>
 
             <TabsContent value="wishlist">
               <Card>
-                <CardHeader><CardTitle>My Wish List</CardTitle></CardHeader>
-                <CardContent>
-                  <Button size="sm" asChild>
-                    <a href="/wishlist">Open Wishlist</a>
-                  </Button>
+                <CardContent className="pt-6 text-center">
+                  <p className="text-muted-foreground mb-4">View your wishlist items.</p>
+                  <Button onClick={() => navigate("/wishlist")}>Go to Wishlist</Button>
                 </CardContent>
               </Card>
             </TabsContent>
 
-            <TabsContent value="addresses" className="space-y-6">
-              <Card>
-                <CardHeader><CardTitle>Add New Address</CardTitle></CardHeader>
-                <CardContent className="grid md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <div className="font-medium">Contact Information</div>
-                    <Input placeholder="First Name" />
-                    <Input placeholder="Last Name" />
-                    <Input placeholder="Company" />
-                    <Input placeholder="Phone Number" />
-                  </div>
-                  <div className="space-y-2">
-                    <div className="font-medium">Address</div>
-                    <Input placeholder="Street Address" />
-                    <Select>
-                      <SelectTrigger><SelectValue placeholder="Country" /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="CA">Canada</SelectItem>
-                        <SelectItem value="US">United States</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Select>
-                      <SelectTrigger><SelectValue placeholder="State/Province" /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="BC">British Columbia</SelectItem>
-                        <SelectItem value="ON">Ontario</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Input placeholder="City" />
-                    <Input placeholder="Zip/Postal Code" />
-                    <Button>Save Address</Button>
-                  </div>
-                </CardContent>
-              </Card>
+            <TabsContent value="addresses">
+              <AddressBook />
             </TabsContent>
 
             <TabsContent value="account-edit">
-              <Card>
-                <CardHeader><CardTitle>Edit Account Information</CardTitle></CardHeader>
-                <CardContent className="grid md:grid-cols-2 gap-4">
-                  <Input placeholder="First Name" />
-                  <Input placeholder="Last Name" />
-                  <Input placeholder="Email" />
-                  <Input placeholder="Password" type="password" />
-                  <Button className="md:col-span-2">Save</Button>
-                </CardContent>
-              </Card>
+              <EditAccount />
             </TabsContent>
 
             <TabsContent value="payments">
-              <Card>
-                <CardHeader><CardTitle>Stored Payment Methods</CardTitle></CardHeader>
-                <CardContent>
-                  <Button size="sm" asChild>
-                    <a href="https://app.canadamarketplace.test/en/vault/cards/listaction/" target="_blank" rel="noreferrer">Manage in Magento</a>
-                  </Button>
-                </CardContent>
-              </Card>
+              <PaymentMethods />
             </TabsContent>
 
             <TabsContent value="reviews">
-              <Card>
-                <CardHeader><CardTitle>My Product Reviews</CardTitle></CardHeader>
-                <CardContent>
-                  <Button size="sm" asChild>
-                    <a href="https://app.canadamarketplace.test/en/review/customer/" target="_blank" rel="noreferrer">View Reviews</a>
-                  </Button>
-                </CardContent>
-              </Card>
+              <ProductReviews />
             </TabsContent>
 
             <TabsContent value="newsletter">
-              <Card>
-                <CardHeader><CardTitle>Newsletter Subscription</CardTitle></CardHeader>
-                <CardContent>
-                  <Button size="sm" asChild>
-                    <a href="https://app.canadamarketplace.test/en/newsletter/manage/" target="_blank" rel="noreferrer">Manage Subscription</a>
-                  </Button>
-                </CardContent>
-              </Card>
+              <NewsletterSubscription />
             </TabsContent>
 
-            <TabsContent value="privacy" className="space-y-6">
-              <Card>
-                <CardHeader><CardTitle>Information</CardTitle></CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">
-                    This website may store and process Personally Identifiable Information (PII). As per the General Data Protection Regulation (GDPR) you have access to receive the data we store about you and you can request your data to be removed. Please read our Terms & Conditions and Privacy Policy to learn more.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader><CardTitle>Export Your Personal Data</CardTitle></CardHeader>
-                <CardContent>
-                  <Button variant="outline">Export My Data</Button>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader><CardTitle>Account Deletion</CardTitle></CardHeader>
-                <CardContent>
-                  <Button variant="destructive">Delete My Account</Button>
-                </CardContent>
-              </Card>
+            <TabsContent value="privacy">
+              <PrivacySettings />
             </TabsContent>
           </section>
         </Tabs>

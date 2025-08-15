@@ -16,11 +16,12 @@ export interface Product {
   name: string;
   price: number;
   image: string;
-  vendor: string;
+  vendor: { id: string; name: string; logo?: string; verified?: boolean };
   vendorId: string;
   category: string;
   description: string;
   featured: boolean;
+  rating?: number;
 }
 
 export const mockVendors = [
@@ -83,43 +84,114 @@ export const mockProducts: Product[] = [
     name: "Wireless Headphones", 
     price: 99.99, 
     image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400", 
-    vendor: "TechCorp",
+    vendor: { id: "1", name: "TechCorp", verified: true },
     vendorId: "1",
     category: "Electronics",
     description: "Premium wireless headphones with noise cancellation and 30-hour battery life.",
-    featured: true
+    featured: true,
+    rating: 4.5
   },
   { 
     id: "2", 
     name: "Smart Watch", 
     price: 199.99, 
     image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400", 
-    vendor: "TechCorp",
+    vendor: { id: "2", name: "TechCorp", verified: true },
     vendorId: "2",
     category: "Electronics",
     description: "Advanced fitness tracking and smartphone connectivity.",
-    featured: false
+    featured: false,
+    rating: 4.2
   },
   { 
     id: "3", 
     name: "Laptop Stand", 
     price: 49.99, 
     image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400", 
-    vendor: "OfficeSupply Co",
+    vendor: { id: "3", name: "OfficeSupply Co", verified: false },
     vendorId: "1",
     category: "Electronics",
     description: "Ergonomic aluminum laptop stand for better posture.",
-    featured: false
+    featured: false,
+    rating: 4.0
   },
   { 
     id: "4", 
     name: "Organic Coffee", 
     price: 24.99, 
     image: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=400", 
-    vendor: "Canadian Roasters",
+    vendor: { id: "4", name: "Canadian Roasters", verified: true },
     vendorId: "1",
     category: "Food & Beverages",
     description: "100% organic, fair-trade coffee beans.",
-    featured: true
+    featured: true,
+    rating: 4.8
   },
+];
+
+// Mock Orders
+export const mockOrders = [
+  {
+    id: "ORD001",
+    date: "2024-01-15",
+    total: 249.98,
+    status: "Delivered",
+    vendor: "TechCorp",
+    items: [
+      { name: "Wireless Headphones", quantity: 1, price: 99.99 },
+      { name: "Smart Watch", quantity: 1, price: 149.99 }
+    ]
+  },
+  {
+    id: "ORD002", 
+    date: "2024-01-10",
+    total: 74.98,
+    status: "Shipped",
+    vendor: "Canadian Roasters",
+    items: [
+      { name: "Organic Coffee", quantity: 3, price: 24.99 }
+    ]
+  }
+];
+
+// Mock Addresses
+export const mockAddresses = [
+  {
+    id: "1",
+    type: "billing",
+    firstName: "John",
+    lastName: "Doe", 
+    company: "TechCorp",
+    street: "123 Main St",
+    city: "Toronto",
+    province: "ON",
+    postalCode: "M5V 3A8",
+    country: "Canada",
+    phone: "+1-416-555-0123",
+    isDefault: true
+  }
+];
+
+// Mock Payment Methods
+export const mockPaymentMethods = [
+  {
+    id: "1",
+    type: "visa",
+    last4: "1234",
+    expiryMonth: 12,
+    expiryYear: 2025,
+    isDefault: true
+  }
+];
+
+// Mock Reviews
+export const mockReviews = [
+  {
+    id: "1",
+    productName: "Wireless Headphones",
+    rating: 5,
+    title: "Amazing quality!",
+    comment: "These headphones exceeded my expectations.",
+    date: "2024-01-20"
+  }
 ];

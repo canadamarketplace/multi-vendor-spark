@@ -67,7 +67,7 @@ const SellerProductPage = () => {
                       <img src={p.image} alt={p.name} className="h-full w-full object-cover bg-muted" />
                       <div className="p-4">
                         <h3 className="font-medium mb-2">{p.name}</h3>
-                        <p className="text-sm text-muted-foreground mb-2">Sold by {p.vendor?.name}</p>
+                        <p className="text-sm text-muted-foreground mb-2">Sold by {p.vendor.name}</p>
                         <div className="font-semibold mb-3">${p.price.toFixed(2)}</div>
                         <Button>Add to Cart</Button>
                       </div>
